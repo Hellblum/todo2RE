@@ -1,9 +1,17 @@
 .main{
   width: 1500px;
+  height: auto;
   margin: 0 auto;
 }
-.input{
+.section{
   width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.input{
+  width: 50%;
 	color: #333;
 	padding: 0.8rem 1rem;
 	font-size: 1rem;
@@ -12,8 +20,5 @@
 	border: 1px solid #eaeaea;
 	transition: all 0.2s ease;
 	box-shadow: none;
-  margin-bottom: 1rem;
-}
-.button{
-  margin: 0 auto;
+  
 }
