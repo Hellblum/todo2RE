@@ -1,28 +1,27 @@
 import { useEffect, useState } from 'react'
-import Button from '../Button/Button'
+import Button from '../../components/Button/Button'
 import Tabs from '../Tabs/Tabs'
 import classes from './Main.module.css'
 import ContentSection from '../ContentSection/ContentSection'
-import Input from '../Input/Input'
+import Input from '../../components/Input/Input'
+import Checkbox from '../../components/Checkbox/Checkbox'
+import { getTasks } from '../../services/todoServices'
+
 
 const Main = () =>{
   const [ inputValue, setInputValue ] = useState('')
   const [ items, setItems] = useState([])
 
   useEffect(() =>{
-    const getTasks= async () =>{
+    const loadTasks= async () =>{
       try{
-        const res = await fetch('http://localhost:3000/todos');
-        if(!res.ok){
-          throw new Error('Can`t get all tasks')
-        }
-        const data = await res.json()
+        const data = await getTasks()
         setItems(data)
       } catch(error) {
         console.error(error.message)
       }
     }
-    getTasks()
+    loadTasks()
   }, [])
 
   const handleClick = async () =>{
@@ -52,6 +51,9 @@ const Main = () =>{
     }
   }
 
+  // const handleCheckboxChange = async () =>{
+  // }
+
   return(
     <main className={classes.main}>
       <section className={classes.section}>
@@ -65,7 +67,15 @@ const Main = () =>{
       </section>
       <Tabs/>
       <ContentSection>
-        {items.map(item => (<li key={item.id}>{item.title}</li>))}
+        {items.map(item => (
+        <li key={item.id}>
+        <Checkbox
+          type="checkbox"
+          checked={item.checked}
+          onChange={() => handleCheckboxChange(item.id)}
+        />
+        {item.title}
+        </li>))}
       </ContentSection>  
     </main>
   )

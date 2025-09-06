@@ -1,12 +1,10 @@
 import './App.css'
-import Header from './components/Header/Header'
-import Main from './components/Main/Main'
+import HomePage from './pages/HomePage'
 
 const App = () => {
   return (
     <>
-      <Header/>
-      <Main/>
+      <HomePage/>
     </>
   )
 }

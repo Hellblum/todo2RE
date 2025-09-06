@@ -1,12 +1,12 @@
 import classes from './Input.module.css'
-const Input = ({ type='text', onChange, value, placeholder }) => {
+const Input = ({ type, onChange, placeholder, value }) => {
   return(
-    <input 
+    <input
       type={type}
-      className={classes.input} 
-      onChange={onChange} 
-      placeholder={placeholder} 
+      onChange={onChange}
+      placeholder={placeholder}
       value={value}
+      className={classes.input}
     />
   )
 }
