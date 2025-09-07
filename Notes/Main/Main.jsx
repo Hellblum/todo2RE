@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import Button from '../../components/Button/Button'
+import Button from '../../src/components/Button/Button'
 import Tabs from '../Tabs/Tabs'
 import classes from './Main.module.css'
 import ContentSection from '../ContentSection/ContentSection'
-import Input from '../../components/Input/Input'
-import Checkbox from '../../components/Checkbox/Checkbox'
-import { getTasks } from '../../services/todoServices'
+import Input from '../../src/components/Input/Input'
+import Checkbox from '../../src/components/Checkbox/Checkbox'
+import { getTasks } from '../../src/services/todoServices'
 
 
 const Main = () =>{
@@ -72,7 +72,7 @@ const Main = () =>{
         <Checkbox
           type="checkbox"
           checked={item.checked}
-          onChange={() => handleCheckboxChange(item.id)}
+          // onChange={() => handleCheckboxChange(item.id)}
         />
         {item.title}
         </li>))}

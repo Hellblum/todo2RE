@@ -5,19 +5,22 @@ import Button from '../../components/Button/Button'
 import { addTask } from '../../services/todoServices'
 
 
-const TodoForm = () =>{
+const TodoForm = ({ setItems }) =>{
   const [ inputValue, setInputValue ] = useState('')
 
   const handleClick = async () =>{
-    if(inputValue !== "") {
+    if(inputValue.trim() !== "") {
       const task = {
         title: inputValue,
         description: '',
         completed: false
       }
       try{
-        await addTask(task)
-        setInputValue('')
+        const created = await addTask(task)
+        if(created) {
+          setItems(prev => [...prev, created])
+          setInputValue('')
+        }
       } catch (error) {
         console.error(error.message)
       }
@@ -27,13 +30,13 @@ const TodoForm = () =>{
   return(
     <>
       <Input
-      type='text'
-          onChange={(e)  => setInputValue(e.target.value)}
-          placeholder={'Enter task'}
-          value={inputValue}>
+        type='text'
+        onChange={(e)  => setInputValue(e.target.value)}
+        placeholder={'Enter task'}
+        value={inputValue}>
       </Input>
       <Button
-      onClick={handleClick}> Add
+        onClick={handleClick}> Add
       </Button>
     </>
   )

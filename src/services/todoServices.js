@@ -30,7 +30,7 @@ export const addTask = async(task) => {
 
 export const updateTask = async (id, updates) => {
   try{
-    const res = await fetch('http://localhost:3000/todos/${id}', {
+    const res = await fetch(`http://localhost:3000/todos/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(updates),
         headers: {
@@ -43,12 +43,13 @@ export const updateTask = async (id, updates) => {
     return await res.json();
   } catch(error) {
     console.error(error.message)
+    throw error;
   }
 }
 
 export const deleteTask = async (id) => {
   try{
-    const res = await fetch('http://localhost:3000/todos/${id}', {
+    const res = await fetch(`http://localhost:3000/todos/${id}`, {
         method: 'DELETE'
     })
     if(!res.ok){
