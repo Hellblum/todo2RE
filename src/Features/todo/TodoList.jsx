@@ -21,7 +21,18 @@ const TodoList = () => {
 
   const onToggle = async (id) => {
     const item = items.find(item => item.id === id)
-    const saved = await updateTask(id, {title: item.title, description: item.description, completed: !item.completed })
+    const saved = await updateTask(id, {completed: !item.completed })
+    if(saved){
+      setItems(items.map(item => (item.id === id ? saved : item)))
+    }
+  }
+  const onSave = async (id, newTitle, newDescription) => {
+    const item = items.find(item => item.id === id)
+    const saved = await updateTask(id, {
+      title: newTitle, 
+      description: newDescription, 
+      completed: item.completed
+    })
     if(saved){
       setItems(items.map(item => (item.id === id ? saved : item)))
     }
@@ -36,13 +47,15 @@ const TodoList = () => {
 
   return(
     <>
-    <TodoForm setItems={setItems}/>
+    <TodoForm 
+      setItems={setItems}/>
       <ul>
         {items.map(item =>
-          <TodoItem
+          <TodoItem 
             key={item.id}
             item={item}
             onToggle={onToggle}
+            onSave={onSave}
             onDelete={onDelete}
           />
         )}

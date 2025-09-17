@@ -2,18 +2,23 @@ import { useState } from 'react'
 import Button from '../../components/Button/Button'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import Modal from '../../components/Modal/Modal'
-const TodoItem = ({ item, onToggle, onDelete}) => {
+import Input from '../../components/Input/Input'
+
+const TodoItem = ({ item, onToggle, onSave, onDelete}) => {
   const [ open, setOpen ] = useState(false)
+  const [editTitleValue, setTitleValue] = useState(item.title)
+  const [editDescriptionValue, setDescriptionValue] = useState(item.description)
 
   const editOpen = () => {
     setOpen(true)
   }
+
   const editClose = () => {
     setOpen(false)
   }
 
   return(
-    <li>
+    <li style={{display:"flex", justifyContent:"space-between", gap:"rem", cursor:"pointer"}}>
     <Checkbox 
     checked={item.completed} 
     onChange={() => onToggle(item.id)}
@@ -23,10 +28,18 @@ const TodoItem = ({ item, onToggle, onDelete}) => {
     onClick={() => onDelete(item.id)}
     >Delete</Button>
     
-    <Modal open={open} onClose={() => setOpen(false)}>
-      <h2>Modal window is work now</h2>
-      <p>{item.description}</p>
-      <Button onClick={editClose}>X</Button>
+    <Modal 
+      open={open} onClose={() => setOpen(false)}>
+      <Input 
+      type='text'
+      onChange={(e) => setTitleValue(e.target.value)} 
+      value={editTitleValue}/>
+      <Input 
+      type='text'
+      onChange={e => setDescriptionValue(e.target.value)}
+      value={editDescriptionValue}/>
+      <Button onClick={() => onSave(item.id, editTitleValue, editDescriptionValue)}>Save</Button>
+      <Button onClick={editClose}>Close</Button>
     </Modal>
     </li>
   )

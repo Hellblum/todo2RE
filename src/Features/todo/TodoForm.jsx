@@ -4,7 +4,6 @@ import Button from '../../components/Button/Button'
 // import classes from './Todo.module.css'
 import { addTask } from '../../services/todoServices'
 
-
 const TodoForm = ({ setItems }) =>{
   const [ inputValue, setInputValue ] = useState('')
 
