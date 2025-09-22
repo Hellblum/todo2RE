@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-// import classes from './Todo.module.css'
+import classes from '../../features/todo/Todo.module.css'
 import { updateTask, getTasks, deleteTask } from '../../services/todoServices'
-import TodoItem from './TodoItem'
-import TodoForm from './TodoForm'
+import TodoItem from '../../features/todo/TodoItem'
+import TodoForm from '../../features/todo/TodoForm'
+import TodoFilters from '../../features/todo/TodoFilters'
 
 const TodoList = () => {
   const [ items, setItems] = useState([])
+  const [ filter, setFilter] = useState('all')
 
   useEffect(() =>{
     const loadTasks = async () =>{
@@ -45,13 +47,22 @@ const TodoList = () => {
     }
   }
 
+  const filterItems = items.filter(item => {
+    if (filter === 'active') return !item.completed
+    if (filter === 'completed') return item.completed
+    return true
+  })
+
   return(
     <>
-    <TodoForm 
+      <TodoForm 
+      className={classes.todoForm}
       setItems={setItems}/>
+      <TodoFilters filter={filter} setFilter={setFilter}/>
       <ul>
-        {items.map(item =>
+        {filterItems.map(item =>
           <TodoItem 
+          className={classes.todoItem}
             key={item.id}
             item={item}
             onToggle={onToggle}

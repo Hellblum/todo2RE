@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import classes from './Modal.module.css'
 const Modal = ({ children, open, onClose}) => {
   const dialogRef = useRef(null)
 
@@ -24,7 +25,9 @@ const Modal = ({ children, open, onClose}) => {
 
   return(
     <>
-      <dialog ref={dialogRef}>
+      <dialog 
+      className={classes.modal}
+      ref={dialogRef}>
         {children}
       </dialog>
     </>

@@ -1,4 +1,4 @@
-import TodoList from './../Features/todo/TodoList'
+import TodoList from './../features/todo/TodoList'
 
 const HomePage = () => {
   return (
