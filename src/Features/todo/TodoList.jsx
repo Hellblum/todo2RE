@@ -23,7 +23,11 @@ const TodoList = () => {
 
   const onToggle = async (id) => {
     const item = items.find(item => item.id === id)
-    const saved = await updateTask(id, {completed: !item.completed })
+    const saved = await updateTask(id, {
+      title: item.title, 
+      description: item.description, 
+      completed: !item.completed 
+    })
     if(saved){
       setItems(items.map(item => (item.id === id ? saved : item)))
     }
