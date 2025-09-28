@@ -1,15 +1,20 @@
 import { useState } from 'react'
 import Modal from '../../components/Modal/Modal'
-import Input from '../../components/Input/Input'
-import Button from '../../components/Button/Button'
+import AuthForm from './AuthForm'
 
 const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ mode, setMode ] = useState('login')
   
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
     try{
-      const res = await fetch('http://localhost:3000/auth/login', {
+      e.preventDefault()
+      const url = mode === 'login'
+      ? 'http://localhost:3000/auth/login'
+      : 'http://localhost:3000/auth/registration'
+
+      const res = await fetch(url, {
 					method: 'POST',
 					body: JSON.stringify({ username, password }),
 					headers: { 'Content-Type': 'application/json' },
@@ -31,21 +36,28 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
 
   return(
     <Modal open={open} onClose={onClose}>
-      <Input 
-        type='text' 
-        placeholder='username'
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+      <AuthForm
+        mode={mode}
+        username={username}
+        password={password}
+        onUsernameChange={e => setUsername(e.target.value)}
+        onPasswordChange={e => setPassword(e.target.value)}
+        onSubmit={handleSubmit}
       />
-      <Input 
-        type='password' 
-        placeholder='password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button
-      onClick={handleLogin}
-      >Accept</Button>
+      <div>
+        {
+          mode === 'login' ? (
+            <span>
+              Don't have an accout? {' '}
+              <button onClick={() => setMode('register')}>Sign up</button>
+            </span>
+          ) : (
+            <span>Already have an account?
+              <button onClick={() => setMode('login')}>Sing in</button>
+            </span>
+          )
+        }
+      </div>
     </Modal>
   )
 }
