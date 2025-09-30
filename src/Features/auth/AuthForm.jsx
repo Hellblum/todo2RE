@@ -3,12 +3,13 @@ import Button from "../../components/Button/Button";
 
 const AuthForm = (
   { 
-    mode = 'login', // 'login' | 'register' ,
+    mode = 'login',
     onSubmit,
     username, 
     onUsernameChange, 
     password, 
-    onPasswordChange 
+    onPasswordChange,
+    error
   }
 ) => {
   return (
@@ -25,10 +26,13 @@ const AuthForm = (
       value={password}
       onChange={onPasswordChange}
       />
+      { error && (
+        <div style={{ color:'red', margin:'8px 0'}}>{ error }</div>
+      )}
       <Button 
-        type='submmit'
+        type='submit'
       >
-        { mode === 'login' ? 'Sign in' : 'Sign up'}
+        { mode === 'login' ? 'Sign in' : 'Sign up' }
       </Button>
     </form>
   )

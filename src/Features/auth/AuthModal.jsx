@@ -6,10 +6,20 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ mode, setMode ] = useState('login')
+  const [ error, setError] = useState('')
   
   const handleSubmit = async (e) => {
+    e.preventDefault()
+    if(!username || !password) {
+      setError('Username and password are required')
+      return
+    }
+    if(password.length < 4) {
+      setError('Password must be at least 4 characters')
+      return
+    }
+    setError('')
     try{
-      e.preventDefault()
       const url = mode === 'login'
       ? 'http://localhost:3000/auth/login'
       : 'http://localhost:3000/auth/registration'
@@ -20,7 +30,8 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
 					headers: { 'Content-Type': 'application/json' },
 				})
 				if (!res.ok) {
-					throw new Error(`Error: ${res.status} ${res.statusText}`);
+          const errData = await res.json()
+					throw new Error(errData.message || `Error: ${res.status} ${res.statusText}`);
 				}
         const data = await res.json()
         if (data.token) {
@@ -29,9 +40,8 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
           onClose()
         }
     } catch (err) {
-      console.error(err)
+      setError(err.message)
     }
-
   }
 
   return(
@@ -43,6 +53,7 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
         onUsernameChange={e => setUsername(e.target.value)}
         onPasswordChange={e => setPassword(e.target.value)}
         onSubmit={handleSubmit}
+        error={error}
       />
       <div>
         {
