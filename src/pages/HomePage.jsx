@@ -1,8 +1,10 @@
 import TodoList from './../features/todo/TodoList'
+import Header from '../components/Header/Header'
 
 const HomePage = () => {
   return (
-    <><h1>To-do2.0 RE</h1>
+    <>
+      <Header/>
       <TodoList/>
     </>
   )

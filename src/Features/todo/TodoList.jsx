@@ -58,7 +58,7 @@ const TodoList = () => {
   })
 
   return(
-    <>
+    <div className={classes.list}>
       <TodoForm 
       className={classes.todoForm}
       setItems={setItems}/>
@@ -75,7 +75,7 @@ const TodoList = () => {
           />
         )}
       </ul>
-    </>
+    </div>
   )
 }
 
